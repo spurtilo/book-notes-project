@@ -1,5 +1,50 @@
 <%- include('partials/header.ejs') %>
 
-<p>HELLO WORLD!</p>
+<div class="container">
+    <div class="row">
+        <img src="assets/images/bookshelf.png" id="bookshelf-img" alt="image of books on a shelf">
+    </div>
+    <div class="row">
+        <h1>Reader's Logbook</h1>
+        <p>
+            The Reader's Logbook serves as a meticulously crafted repository 
+            chronicling my extensive literary voyages. Within these virtual 
+            pages lies a comprehensive archive documenting the diverse books 
+            that have captured my imagination, each entry adorned with personal 
+            annotations and reflections.
+        </p>
+        <p>
+            Delve into this curated collection to journey through my encounters 
+            with varied narratives, characters, and stories that have profoundly 
+            shaped my reading expedition. Explore and relish the rich tapestry of my literary adventures.
+        </p>
+    </div>
+    <div class="navbar">
+        <div><img src="assets/images/button1.png" class="nav-button" alt=""></div>
+        <div><img src="assets/images/button2.png" class="nav-button" alt=""></div>
+    </div>
+    <div class="log-entry-container">
+
+        <div>
+            <img src="assets/images/1984.jpg" class="book-preview-img" alt="">
+        </div>
+        <div>
+            <h2>Nineteen Eighty-Four (1984)</h2>
+            <p id="book-description">by George Orwell</p>
+            <p id="book-description">
+                Winston Smith toes the Party line, rewriting history to satisfy 
+                the demands of the Ministry of Truth. With each lie he writes, 
+                Winston grows to hate the Party that seeks power for its own sake 
+                and persecutes those who dare to commit thoughtcrimes. But as he starts 
+                to think for himself, Winston can't escape the fact that Big Brother is 
+                always watching...
+            </p>
+            <div class="links">
+                <a href="edit_link_here">Edit Entry</a>
+                <a href="delete_link_here">Delete Entry</a> 
+            </div>
+        </div>
+    </div>
+</div>
 
 <%- include('partials/footer.ejs') %>

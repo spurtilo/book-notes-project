@@ -1,0 +1,124 @@
+html {
+    font-size: 16px;
+    background-color: #F5F5F5;
+}
+
+body {
+    margin: 0;
+}
+
+h1 {
+    font-size: 4rem;
+    font-family: 'Cormorant Garamond', serif;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    font-size: 3rem;
+    font-family: 'Cormorant Garamond', serif;
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    font-size: 1.5rem;
+    font-family: 'Proza Libre', sans-serif;
+}
+
+a {
+    font-family: 'Proza Libre', sans-serif;
+    color:black;
+    font-size: 1rem;
+}
+
+#book-description {
+    font-size: 1rem;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    max-width: 900px;
+    height: 100%;
+    padding: 1.5rem;
+    background-color: white;
+}
+
+.row {
+    flex: 1;
+    width: 100%
+}
+
+.navbar {
+    display: flex;
+    gap: 1rem;
+    padding-bottom: 3rem;
+    margin-bottom: 3rem;
+    border-bottom: 2px solid #DFDFDF;
+}
+
+.nav-button {
+    flex: 1;
+    max-width: 13rem;
+    transition: transform 0.3s ease-in-out
+}
+
+.nav-button:hover {
+    transform: scale(1.05);
+}
+
+#bookshelf-img {
+    width: 100%;
+}
+
+.book-preview-img {
+    max-width: 13rem;
+    float: left;
+}
+
+.log-entry-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 0;
+    padding-bottom: 3rem;
+    margin-bottom: 3rem;
+    gap: 1rem;
+    border-bottom: 2px solid #DFDFDF;
+}
+
+.links {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+@media screen and (max-width: 1024px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    html {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    html {
+        font-size: 8px;
+    }
+}
