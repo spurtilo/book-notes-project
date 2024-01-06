@@ -23,28 +23,36 @@
         <div><img src="assets/images/button1.png" class="nav-button" alt=""></div>
         <div><img src="assets/images/button2.png" class="nav-button" alt=""></div>
     </div>
+    <% if (images || data ) { %>
+        <% for (i=0; i<images.length; i++) { %>
     <div class="log-entry-container">
-
         <div>
-            <img src="assets/images/1984.jpg" class="book-preview-img" alt="">
+            <% if (images) { %>
+                <img src="<%= images[i] %>" class="book-preview-img" alt="book cover">
+            <% } else { %>
+                <p>No book cover available</p>
+            <% } %>
         </div>
         <div>
-            <h2>Nineteen Eighty-Four (1984)</h2>
-            <p id="book-description">by George Orwell</p>
-            <p id="book-description">
-                Winston Smith toes the Party line, rewriting history to satisfy 
-                the demands of the Ministry of Truth. With each lie he writes, 
-                Winston grows to hate the Party that seeks power for its own sake 
-                and persecutes those who dare to commit thoughtcrimes. But as he starts 
-                to think for himself, Winston can't escape the fact that Big Brother is 
-                always watching...
-            </p>
+            <% if (data) { %>
+                <h2><%= data[i].title %></h2>
+                <p id="book-description">by <%= data[i].author %></p>
+                <h3>Description</h3>
+                <p id="book-description"><%= data[i].description %></p>
+                <h3>My review</h3>
+                <p id="book-description"><%= data[i].review %></p>
             <div class="links">
                 <a href="edit_link_here">Edit Entry</a>
                 <a href="delete_link_here">Delete Entry</a> 
             </div>
+            <% } else { %>
+                <p>Book data not available.</p>
+            <% } %>
         </div>
+
     </div>
+        <% } %>
+    <% } %>
 </div>
 
 <%- include('partials/footer.ejs') %>

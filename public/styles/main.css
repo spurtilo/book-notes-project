@@ -20,6 +20,13 @@ h2 {
     margin: 0;
     padding: 0;
 }
+h3 {
+    font-size: 1.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+}
 
 p {
     font-size: 1.5rem;
