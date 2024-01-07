@@ -112,6 +112,16 @@ main {
     gap: 1rem;
 }
 
+.star-rating-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 0.5rem;
+    gap: 1rem;
+}
+.star {
+    height: 1rem;
+}
+
 @media screen and (max-width: 1024px) {
     html {
         font-size: 14px;
@@ -126,6 +136,6 @@ main {
 
 @media screen and (max-width: 480px) {
     html {
-        font-size: 8px;
+        font-size: 10px;
     }
 }

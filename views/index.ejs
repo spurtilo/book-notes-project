@@ -20,15 +20,15 @@
         </p>
     </div>
     <div class="navbar">
-        <div><img src="assets/images/button1.png" class="nav-button" alt=""></div>
-        <div><img src="assets/images/button2.png" class="nav-button" alt=""></div>
+        <div><img src="assets/images/button1.png" class="nav-button" alt="navigation button new entry"></div>
+        <div><img src="assets/images/button2.png" class="nav-button" alt="navigation button about"></div>
     </div>
-    <% if (images || data ) { %>
-        <% for (i=0; i<images.length; i++) { %>
+    <% if (data) { %>
+        <% for (let i=0; i<images.length; i++) { %>
     <div class="log-entry-container">
         <div>
             <% if (images) { %>
-                <img src="<%= images[i] %>" class="book-preview-img" alt="book cover">
+                <img src="<%= images[i] %>" class="book-preview-img" alt="book cover image">
             <% } else { %>
                 <p>No book cover available</p>
             <% } %>
@@ -40,6 +40,22 @@
                 <h3>Description</h3>
                 <p id="book-description"><%= data[i].description %></p>
                 <h3>My review</h3>
+
+                <!-- Star rating: renders the correct amounts of filled and empty stars according to rating (0 - 5) -->
+                <div class="star-rating-container">
+                    <% const rating = data[i].rating; %>
+                    <% for (let i=0; i<rating; i++) { %>
+                        <img src="assets/images/star-icon-filled.png" class="star" alt="filled star icon">
+                    <% } %>
+                    <% if (rating < 5) { %>
+                        <% const empties = 5 - data[i].rating; %>
+                        <% for (let i=0; i<empties; i++) { %>
+                            <img src="assets/images/star-icon-empty.png" class="star" alt="empty star icon">
+                        <% } %>
+                    <% } %>
+                </div>
+                
+
                 <p id="book-description"><%= data[i].review %></p>
             <div class="links">
                 <a href="edit_link_here">Edit Entry</a>

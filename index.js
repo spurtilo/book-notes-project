@@ -15,12 +15,12 @@ const db = new pg.Client({
     port: process.env.DB_PORT,
 });
 
-// db.connect();
+db.connect();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-const bookDetails = [
+let bookDetails = [
     {
         isbn: '1782124209',
         title: 'Nineteen Eighty-Four (1984)',
@@ -35,7 +35,8 @@ const bookDetails = [
         '1984' by Orwell shows us just that. Winston tries to rebel against this 
         Big Brother world, and it's gripping to see how he struggles. It's deep, 
         makes you look at our world differently, and kinda scary how it feels relatable 
-        in some ways.` 
+        in some ways.`,
+        rating: 5
     }, 
     {
         isbn: '1943138427',
@@ -54,7 +55,8 @@ const bookDetails = [
         It's more of a sneaky take on politics and power. The animals kick out the humans and run 
         things themselves, but things get pretty crazy. You start to see how power can mess things 
         up real bad. It's short, but it hits hard and makes you think about society and leadership 
-        in a whole new way.`
+        in a whole new way.`,
+        rating: 3
     }
 ];
 
@@ -64,18 +66,24 @@ async function fetchCover(url) {
 }
 
 app.get('/', async (req, res) => {
-    // const result = await db.query('SELECT * FROM books')
-    // console.log(result.rows);
+    try {
+        const result = await db.query('SELECT * FROM books')
+        bookDetails = result.rows;
+    
+        const allCovers = []
+        for (const book of bookDetails) {
+            const url = `https://covers.openlibrary.org/b/isbn/${book.isbn}-M.jpg`;
+            const imageData = await fetchCover(url);
+            allCovers.push(`data:image/jpeg;base64,${imageData}`);
+        }
 
-    const allCovers = []
-    for (const book of bookDetails) {
-        const url = `https://covers.openlibrary.org/b/isbn/${book.isbn}-M.jpg`;
-        const imageData = await fetchCover(url);
-        allCovers.push(`data:image/jpeg;base64,${imageData}`);
+        res.render('index.ejs', { data: bookDetails, images: allCovers });
+    } catch (error) {
+        console.log(error);
     }
-
-    res.render('index.ejs', { data: bookDetails, images: allCovers });
 });
+
+app.post('/new', async (req, res) => {});
 
 app.listen(port, () => {
     console.log('Server running on port 3000');
