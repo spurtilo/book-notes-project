@@ -1,26 +1,26 @@
 <%- include('partials/header.ejs') %>
 
-<div class="container">
+<div class="content-container">
     <div class="row">
         <img src="assets/images/bookshelf.png" id="bookshelf-img" alt="image of books on a shelf">
     </div>
     <div class="row">
         <h1>Reader's Logbook</h1>
-        <p>
+        <p class="header-text">
             The Reader's Logbook serves as a meticulously crafted repository 
             chronicling my extensive literary voyages. Within these virtual 
             pages lies a comprehensive archive documenting the diverse books 
             that have captured my imagination, each entry adorned with personal 
             annotations and reflections.
         </p>
-        <p>
+        <p class="header-text">
             Delve into this curated collection to journey through my encounters 
             with varied narratives, characters, and stories that have profoundly 
             shaped my reading expedition. Explore and relish the rich tapestry of my literary adventures.
         </p>
     </div>
     <div class="navbar">
-        <div><img src="assets/images/button1.png" class="nav-button" alt="navigation button new entry"></div>
+        <div><a href="/new"><img src="assets/images/button1.png" class="nav-button" alt="navigation button new entry"></a></div>
         <div><img src="assets/images/button2.png" class="nav-button" alt="navigation button about"></div>
     </div>
     <% if (data) { %>
@@ -36,9 +36,9 @@
         <div>
             <% if (data) { %>
                 <h2><%= data[i].title %></h2>
-                <p id="book-description">by <%= data[i].author %></p>
+                <p class="entry-text">by <%= data[i].author %></p>
                 <h3>Description</h3>
-                <p id="book-description"><%= data[i].description %></p>
+                <p class="entry-text"><%= data[i].description %></p>
                 <h3>My review</h3>
 
                 <!-- Star rating: renders the correct amounts of filled and empty stars according to rating (0 - 5) -->
@@ -56,7 +56,7 @@
                 </div>
                 
 
-                <p id="book-description"><%= data[i].review %></p>
+                <p class="entry-text"><%= data[i].review %></p>
             <div class="links">
                 <a href="edit_link_here">Edit Entry</a>
                 <a href="delete_link_here">Delete Entry</a> 

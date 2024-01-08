@@ -80,10 +80,30 @@ app.get('/', async (req, res) => {
         res.render('index.ejs', { data: bookDetails, images: allCovers });
     } catch (error) {
         console.log(error);
+    
     }
 });
 
-app.post('/new', async (req, res) => {});
+app.get('/new', async (req, res) => {
+    res.render('new.ejs');
+});
+
+app.post('/submit', async (req, res) => {
+    try {
+        const input = req.body;
+        db.query('INSERT INTO books (isbn, title, author, description, review, rating) VALUES ($1, $2, $3, $4, $5, $6)',
+            [   input.isbn,
+                input.title,
+                input.author,
+                input.description,
+                input.review,
+                input.rating
+            ]);
+        res.redirect('/')
+    } catch (error) {
+        console.log(error);
+    }
+});
 
 app.listen(port, () => {
     console.log('Server running on port 3000');

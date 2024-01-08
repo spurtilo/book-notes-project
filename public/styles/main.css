@@ -1,36 +1,40 @@
 html {
     font-size: 16px;
     background-color: #F5F5F5;
+    height: 100%;
 }
 
 body {
     margin: 0;
+    height: 100%;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+h1, h2, h3 {
+    font-family: 'Cormorant Garamond', serif;
+    margin: 0;
+    padding: 0;
 }
 
 h1 {
     font-size: 4rem;
-    font-family: 'Cormorant Garamond', serif;
-    margin: 0;
-    padding: 0;
 }
 
 h2 {
     font-size: 3rem;
-    font-family: 'Cormorant Garamond', serif;
-    margin: 0;
-    padding: 0;
-}
-h3 {
-    font-size: 1.5rem;
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 600;
-    margin: 0;
-    padding: 0;
 }
 
-p {
+h3 {
     font-size: 1.5rem;
-    font-family: 'Proza Libre', sans-serif;
+    font-weight: 600;
 }
 
 a {
@@ -39,26 +43,22 @@ a {
     font-size: 1rem;
 }
 
-#book-description {
+.header-text {
+    font-family: 'Proza Libre', sans-serif;
+    font-size: 1.5rem;
+}
+
+.entry-text {
+    font-family: 'Proza Libre', sans-serif;
     font-size: 1rem;
 }
 
-main {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    height: 100%;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-}
-
-.container {
+.content-container {
     display: flex;
     flex-direction: column;
     text-align: left;
     max-width: 900px;
-    height: 100%;
+    min-height: 100%;
     padding: 1.5rem;
     background-color: white;
 }
@@ -121,6 +121,44 @@ main {
 .star {
     height: 1rem;
 }
+
+.form-wrapper {
+    display: grid;
+    font-family: 'Proza Libre', sans-serif;
+    font-size: 1rem;
+    margin-top: 2rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 3fr 2fr;
+    padding-bottom: 1.5rem;
+}
+
+.button-row {
+    display: grid;
+    justify-items: space-between;
+    grid-template-columns: 1fr 1.4fr 0.2fr 1.4fr 2fr;
+}
+
+.form-field {
+    width: 100%;
+    padding: 0.5rem 0.5rem;
+}
+
+#review {
+    height: 10rem;
+}
+
+.form-button {
+    width: 100%;
+    padding: 0.5rem;
+}
+.label {
+    display: grid;
+    justify-items: start;
+}
+
 
 @media screen and (max-width: 1024px) {
     html {

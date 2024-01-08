@@ -1,0 +1,84 @@
+<%- include('partials/header.ejs') %>
+
+<div class="content-container">
+    <div class="header">
+        <img src="assets/images/bookshelf.png" id="bookshelf-img" alt="image of books on a shelf">
+        <h1>New Logbook Entry</h1>
+        <p class="header-text">All fields are required.</p>
+    </div>
+
+    <div class="form-wrapper">
+        <form autocomplete="off" action="/submit" method="post">
+            <div class="form-row">
+                <div class="label">
+                    <label for="isbn">ISBN: </label>
+                </div>
+                <div>
+                    <input type="text" name="isbn" class="form-field" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="label">
+                    <label for="title">Title: </label>
+                </div>
+                <div>
+                    <input type="text" name="title" class="form-field" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="label">
+                    <label for="author">Author: </label>
+                </div>
+                <div>
+                    <input type="text" name="author" class="form-field" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="label">
+                    <label for="description">Description: </label>
+                </div>
+                <div>
+                    <input type="text" name="description" class="form-field" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="label">
+                    <label for="review">Review: </label>
+                </div>
+                <div>
+                    <input type="text" name="review" class="form-field" id="review" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="label">
+                    <label for="rating">Rating: </label>
+                </div>
+                <div>
+                    <select name="rating" class="form-field" required>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+            <div class="button-row">
+                <div>
+                </div>
+                <div>
+                    <button type="submit" class="form-button">Send</button>
+                </div>
+                <div>
+                </div>
+                <div>
+                    <button type="button" class="form-button" onclick="window.location.href='/'">Cancel</button>
+                </div>
+                <div>
+                </div>
+        </form>
+    </div>
+
+</div>
+
+<%- include('partials/footer.ejs') %>
