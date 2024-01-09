@@ -106,9 +106,11 @@ app.post('/submit', async (req, res) => {
 });
 
 app.post('/update', async (req, res) => {
+    const updatedReview = req.body.updatedBookReview
     const updateId = req.body.idToUpdate;
-
+    
     try {
+        await db.query('UPDATE books SET review = ($1) WHERE id = $2', [updatedReview, updateId])
         res.redirect('/')
     } catch (error) {
         console.log(error);

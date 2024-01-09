@@ -57,7 +57,7 @@ a {
     display: flex;
     flex-direction: column;
     text-align: left;
-    max-width: 900px;
+    max-width: 56rem;
     min-height: 100%;
     padding: 1.5rem;
     background-color: white;
@@ -106,7 +106,7 @@ a {
     border-bottom: 2px solid #DFDFDF;
 }
 
-.links {
+.edit-delete-buttons {
     display: flex;
     flex-direction: row;
     margin-top: 2rem;
@@ -116,7 +116,8 @@ a {
 .star-rating-container {
     display: flex;
     flex-direction: row;
-    margin-top: 0.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     gap: 1rem;
 }
 .star {
@@ -137,7 +138,7 @@ a {
     padding-bottom: 1.5rem;
 }
 
-.button-row {
+.newentry-button-row {
     display: grid;
     justify-items: space-between;
     grid-template-columns: 1fr 1.4fr 0.2fr 1.4fr 2fr;
@@ -149,12 +150,16 @@ a {
     
 }
 
-#review {
-    height: 10rem;
+.review-input {
+    width: 100%;
+    min-height: 10rem;
+    max-width: 43rem;
+    padding: 0.5rem 0.5rem;
+    text-align: justify;
 }
 
 .form-button {
-    width: 100%;
+    min-width: 7rem;
     padding: 0.5rem;
 }
 .label {
