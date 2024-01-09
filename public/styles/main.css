@@ -109,6 +109,7 @@ a {
 .links {
     display: flex;
     flex-direction: row;
+    margin-top: 2rem;
     gap: 1rem;
 }
 
@@ -127,6 +128,7 @@ a {
     font-family: 'Proza Libre', sans-serif;
     font-size: 1rem;
     margin-top: 2rem;
+    margin-bottom: 6rem;
 }
 
 .form-row {
@@ -144,6 +146,7 @@ a {
 .form-field {
     width: 100%;
     padding: 0.5rem 0.5rem;
+    
 }
 
 #review {

@@ -20,7 +20,7 @@
         </p>
     </div>
     <div class="navbar">
-        <div><a href="/new"><img src="assets/images/button1.png" class="nav-button" alt="navigation button new entry"></a></div>
+        <div><a href="/new-entry"><img src="assets/images/button1.png" class="nav-button" alt="navigation button new entry"></a></div>
         <div><img src="assets/images/button2.png" class="nav-button" alt="navigation button about"></div>
     </div>
     <% if (data) { %>
@@ -56,10 +56,16 @@
                 </div>
                 
 
-                <p class="entry-text"><%= data[i].review %></p>
+                <p class="entry-text" id="review<%= data[i].id %>"><%= data[i].review %></p>
             <div class="links">
-                <a href="edit_link_here">Edit Entry</a>
-                <a href="delete_link_here">Delete Entry</a> 
+                <form action="/update" method="post">
+                    <input type="hidden" name="idToUpdate" value="<%= data[i].id %>">
+                    <button type="submit" class="form-button">Update review</button>
+                </form>
+                <form action="/delete" method="post">
+                    <input type="hidden" name="idToDelete" value="<%= data[i].id %>">
+                    <button type="submit" class="form-button" onclick="return confirm('Are you sure you want to delete this book?')">Delete book</button>
+                </form>
             </div>
             <% } else { %>
                 <p>Book data not available.</p>

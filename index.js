@@ -84,7 +84,7 @@ app.get('/', async (req, res) => {
     }
 });
 
-app.get('/new', async (req, res) => {
+app.get('/new-entry', async (req, res) => {
     res.render('new.ejs');
 });
 
@@ -103,6 +103,27 @@ app.post('/submit', async (req, res) => {
     } catch (error) {
         console.log(error);
     }
+});
+
+app.post('/update', async (req, res) => {
+    const updateId = req.body.idToUpdate;
+
+    try {
+        res.redirect('/')
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+app.post('/delete', async (req, res) => {
+ const deleteId = req.body.idToDelete;
+
+ try {
+    await db.query('DELETE FROM books WHERE id = $1', [deleteId]);
+    res.redirect('/')
+ } catch (error) {
+    console.log(error);
+ }
 });
 
 app.listen(port, () => {
