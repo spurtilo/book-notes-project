@@ -65,11 +65,6 @@ let bookDetails = [
     }
 ];
 
-// async function fetchCover(url) {
-//     const response = await axios.get(url, { responseType: 'arraybuffer' });
-//     return Buffer.from(response.data, 'binary').toString('base64');
-// }
-
 async function fetchAndSaveCover(isbn) {
     const url = `https://covers.openlibrary.org/b/isbn/${isbn}-M.jpg`;
     const fileName = isbn;
