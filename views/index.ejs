@@ -24,11 +24,11 @@
         <a href="/about"><img src="assets/images/button2.png" class="nav-button" alt="navigation button about"></a>
     </div>
     <% if (data) { %>
-        <% for (let i=0; i<images.length; i++) { %>
+        <% for (let i=0; i<data.length; i++) { %>
     <div class="log-entry-container">
         <div>
-            <% if (images) { %>
-                <img src="<%= images[i] %>" class="book-preview-img" alt="book cover image">
+            <% if (data[i].image_path !== null) { %>
+                <img src="<%= data[i].image_path %>" class="book-preview-img" alt="book cover image">
             <% } else { %>
                 <p>No book cover available</p>
             <% } %>

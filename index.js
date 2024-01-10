@@ -65,18 +65,19 @@ let bookDetails = [
     }
 ];
 
-async function fetchCover(url) {
-    const response = await axios.get(url, { responseType: 'arraybuffer' });
-    return Buffer.from(response.data, 'binary').toString('base64');
-}
+// async function fetchCover(url) {
+//     const response = await axios.get(url, { responseType: 'arraybuffer' });
+//     return Buffer.from(response.data, 'binary').toString('base64');
+// }
 
-async function fetchAndSaveCover(url, isbn) {
+async function fetchAndSaveCover(isbn) {
+    const url = `https://covers.openlibrary.org/b/isbn/${isbn}-M.jpg`;
     const fileName = isbn;
-    const imagePath = `${__dirname}\\public\\assets\\images\\covers\\${fileName}.jpg`;
+    const imagePath = `\\public\\assets\\images\\covers\\${fileName}.jpg`;
 
     try {
         const response = await axios.get(url, { responseType: 'stream' });
-        const fileStream = fs.createWriteStream(imagePath);
+        const fileStream = fs.createWriteStream(__dirname + imagePath);
     
         response.data.pipe(fileStream);
         console.log(`Image saved: ${fileName}.jpg`);
@@ -89,18 +90,10 @@ app.get('/', async (req, res) => {
     try {
         const result = await db.query('SELECT * FROM books')
         bookDetails = result.rows;
-    
-        const allCovers = []
-        for (const book of bookDetails) {
-            const url = `https://covers.openlibrary.org/b/isbn/${book.isbn}-M.jpg`;
-            const imageData = await fetchCover(url);
-            allCovers.push(`data:image/jpeg;base64,${imageData}`);
-        }
 
-        res.render('index.ejs', { data: bookDetails, images: allCovers });
+        res.render('index.ejs', { data: bookDetails});
     } catch (error) {
         console.log(error);
-    
     }
 });
 
@@ -109,20 +102,20 @@ app.get('/new-entry', async (req, res) => {
 });
 
 app.post('/submit', async (req, res) => {
+    const input = req.body;
+    fetchAndSaveCover(input.isbn);
+    const imagePath = `assets/images/covers/${input.isbn}.jpg`;
+
     try {
-        const input = req.body;
-        db.query('INSERT INTO books (isbn, title, author, description, review, rating) VALUES ($1, $2, $3, $4, $5, $6)',
+        db.query('INSERT INTO books (isbn, title, author, description, review, rating, image_path) VALUES ($1, $2, $3, $4, $5, $6, $7)',
             [   input.isbn,
                 input.title,
                 input.author,
                 input.description,
                 input.review,
-                input.rating
+                input.rating,
+                imagePath
             ]);
-        
-        const url = `https://covers.openlibrary.org/b/isbn/${input.isbn}-M.jpg`;
-        fetchAndSaveCover(url, input.isbn);
-        
         res.redirect('/')
     } catch (error) {
         console.log(error);
