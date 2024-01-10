@@ -3,6 +3,11 @@ import bodyParser from "body-parser";
 import axios from 'axios';
 import pg from "pg";
 import 'dotenv/config';
+import fs from 'fs';
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 const port = 3000;
@@ -65,6 +70,21 @@ async function fetchCover(url) {
     return Buffer.from(response.data, 'binary').toString('base64');
 }
 
+async function fetchAndSaveCover(url, isbn) {
+    const fileName = isbn;
+    const imagePath = `${__dirname}\\public\\assets\\images\\covers\\${fileName}.jpg`;
+
+    try {
+        const response = await axios.get(url, { responseType: 'stream' });
+        const fileStream = fs.createWriteStream(imagePath);
+    
+        response.data.pipe(fileStream);
+        console.log(`Image saved: ${fileName}.jpg`);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 app.get('/', async (req, res) => {
     try {
         const result = await db.query('SELECT * FROM books')
@@ -99,6 +119,10 @@ app.post('/submit', async (req, res) => {
                 input.review,
                 input.rating
             ]);
+        
+        const url = `https://covers.openlibrary.org/b/isbn/${input.isbn}-M.jpg`;
+        fetchAndSaveCover(url, input.isbn);
+        
         res.redirect('/')
     } catch (error) {
         console.log(error);
