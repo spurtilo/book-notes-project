@@ -156,6 +156,7 @@ a {
     max-width: 43rem;
     padding: 0.5rem 0.5rem;
     text-align: justify;
+    white-space: pre-line;
 }
 
 .form-button {

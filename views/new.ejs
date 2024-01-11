@@ -8,10 +8,14 @@
 
     <div class="form-wrapper">
         <div class="form-row">
-            <label for="book-search">Search for a book:</label>
-            <input type="search" class="form-field" id="book-search" name="book-search" placeholder="Enter a book name, author or ISBN"
-            autocomplete="off" />
-            <button>Search</button>
+            <div class="label">
+                <label for="book-search">Search for a book:</label>
+            </div>
+            <div>
+                <input type="search" class="form-field" id="book-search" placeholder="Enter a book name, author or ISBN"
+                autocomplete="off" />
+                <button hidden>Search</button>
+            </div>
         </div>
 
         <form autocomplete="off" action="/submit" method="post">

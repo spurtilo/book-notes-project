@@ -81,12 +81,27 @@ async function fetchAndSaveCover(isbn) {
     }
 }
 
+function formatData(data) {
+
+    data.forEach((item) =>{
+        if (item.description && !item.description.includes('<br>') && item.description.includes('\n')) {
+            item.description = item.description.split('\n').join('<br>');
+        }
+    
+        if (item.review &&! item.review.includes('<br>') && item.review .includes('\n')) {
+            item.review  = item.review.split('\n').join('<br>');
+        }
+    });
+    return data;
+}
+
 app.get('/', async (req, res) => {
     try {
         const result = await db.query('SELECT * FROM books')
         bookDetails = result.rows;
+        const formattedDetails = formatData(bookDetails);
 
-        res.render('index.ejs', { data: bookDetails});
+        res.render('index.ejs', { data: formattedDetails});
     } catch (error) {
         console.log(error);
     }
@@ -97,18 +112,18 @@ app.get('/new-entry', async (req, res) => {
 });
 
 app.post('/submit', async (req, res) => {
-    const input = req.body;
-    fetchAndSaveCover(input.isbn);
-    const imagePath = `assets/images/covers/${input.isbn}.jpg`;
+    const newEntry = req.body;
+    fetchAndSaveCover(newEntry.isbn);
+    const imagePath = `assets/images/covers/${newEntry.isbn}.jpg`;
 
     try {
         db.query('INSERT INTO books (isbn, title, author, description, review, rating, image_path) VALUES ($1, $2, $3, $4, $5, $6, $7)',
-            [   input.isbn,
-                input.title,
-                input.author,
-                input.description,
-                input.review,
-                input.rating,
+            [   newEntry.isbn,
+                newEntry.title,
+                newEntry.author,
+                newEntry.description,
+                newEntry.review,
+                newEntry.rating,
                 imagePath
             ]);
         res.redirect('/')
@@ -118,12 +133,12 @@ app.post('/submit', async (req, res) => {
 });
 
 app.post('/update', async (req, res) => {
-    const updatedReview = req.body.updatedBookReview
+    const updatedReview = req.body.updatedBookReview;
     const updateId = req.body.idToUpdate;
     
     try {
-        await db.query('UPDATE books SET review = ($1) WHERE id = $2', [updatedReview, updateId])
-        res.redirect('/')
+        await db.query('UPDATE books SET review = ($1) WHERE id = $2', [updatedReview, updateId]);
+        res.redirect('/');
     } catch (error) {
         console.log(error);
     }

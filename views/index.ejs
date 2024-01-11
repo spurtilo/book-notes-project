@@ -38,7 +38,7 @@
                 <h2><%= data[i].title %></h2>
                 <p class="entry-text">by <%= data[i].author %></p>
                 <h3>Description</h3>
-                <p class="entry-text"><%= data[i].description %></p>
+                <p class="entry-text"><%- data[i].description %></p>
                 <h3>My review</h3>
 
                 <!-- Star rating: renders the correct amounts of filled and empty stars according to rating (0 - 5) -->
@@ -57,12 +57,12 @@
                 
             <div class="review-wrapper">
                 <div class="entry-text" id="review<%= data[i].id %>">
-                    <%= data[i].review %>
+                    <%- data[i].review %>
                 </div>
                 <div>
                     <form action="/update" method="post">
                         <input type="hidden" name="idToUpdate" value="<%= data[i].id %>">
-                        <textarea id="input<%= data[i].id %>" type="text" class="review-input" name="updatedBookReview"
+                        <textarea id="input<%= data[i].id %>" class="review-input" name="updatedBookReview"
                             autocomplete="off" autofocus="true" hidden="true"><%= data[i].review %></textarea>
                     <div class="edit-delete-buttons">
                         <div>
@@ -97,5 +97,5 @@
       document.getElementById("done" + id).removeAttribute("hidden")
       document.getElementById("input" + id).removeAttribute("hidden")
     }
-  </script>
+</script>
 <%- include('partials/footer.ejs') %>
