@@ -23,6 +23,16 @@
         <a href="/new-entry"><img src="assets/images/button1.png" class="nav-button" alt="navigation button new entry"></a>
         <a href="/about"><img src="assets/images/button2.png" class="nav-button" alt="navigation button about"></a>
     </div>
+    <div class="entry-text" id="sorting-options-wrapper">
+        <form action="/sort" method="post">
+            <label for="sorting">Sort by:</label>
+            <select name="sortBy" id="sorting-dropdown" onchange="this.form.submit()">
+            <option value="title" <% if (sortOption === "title") { %>selected<% } %>>Title</option>
+            <option value="date" <% if (sortOption === "date") { %>selected<% } %>>Date read</option>
+            <option value="rating" <% if (sortOption === "rating") { %>selected<% } %>>Rating</option>
+            </select>
+        </form>
+    </div>
     <% if (data) { %>
         <% for (let i=0; i<data.length; i++) { %>
     <div class="log-entry-container">
@@ -32,6 +42,9 @@
             <% } else { %>
                 <p>No book cover available</p>
             <% } %>
+            <p class="entry-text">
+                Date: <%=data[i].date_read.toLocaleDateString('en-GB', { timeZone: 'UTC' });%>
+            </p>
         </div>
         <div>
             <% if (data) { %>
@@ -89,6 +102,7 @@
         <% } %>
     <% } %>
 </div>
+
 
 <script>
     function handler(id) {

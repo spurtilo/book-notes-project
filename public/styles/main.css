@@ -72,7 +72,7 @@ a {
     display: flex;
     gap: 1rem;
     padding-bottom: 3rem;
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
     border-bottom: 2px solid #DFDFDF;
 }
 
@@ -93,6 +93,7 @@ a {
 .book-preview-img {
     max-width: 13rem;
     float: left;
+    margin-bottom: 1rem;
 }
 
 .log-entry-container {
@@ -168,6 +169,15 @@ a {
     justify-items: start;
 }
 
+#sorting-options-wrapper {
+    width: 100%;
+    margin-bottom: 4rem;
+}
+#sorting-dropdown {
+    width: 6.5rem;
+    padding: 0.5rem 0.5rem;
+    margin-left: 0.5rem;
+}
 
 @media screen and (max-width: 1024px) {
     html {

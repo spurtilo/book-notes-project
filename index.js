@@ -25,6 +25,8 @@ db.connect();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+let currentSortOption = 'title';
+
 let bookDetails = [
     {
         isbn: '1782124209',
@@ -97,11 +99,27 @@ function formatData(data) {
 
 app.get('/', async (req, res) => {
     try {
-        const result = await db.query('SELECT * FROM books')
+        let result = null;
+
+        if (currentSortOption === 'title') {
+            result = await db.query(
+                'SELECT * FROM books ORDER BY title ASC');
+        }
+
+        if (currentSortOption === 'date') {
+            result = await db.query(
+                'SELECT * FROM books ORDER BY date_read DESC');
+        }
+
+        if (currentSortOption === 'rating') {
+            result = await db.query(
+                'SELECT * FROM books ORDER BY rating ASC');
+        }
+        
         bookDetails = result.rows;
         const formattedDetails = formatData(bookDetails);
 
-        res.render('index.ejs', { data: formattedDetails});
+        res.render('index.ejs', { data: formattedDetails, sortOption: currentSortOption });
     } catch (error) {
         console.log(error);
     }
@@ -111,20 +129,28 @@ app.get('/new-entry', async (req, res) => {
     res.render('new.ejs');
 });
 
+app.post('/sort', async (req, res) => {
+    const sortingChoice = req.body.sortBy;
+    currentSortOption = sortingChoice;
+    res.redirect('/')
+});
+
 app.post('/submit', async (req, res) => {
     const newEntry = req.body;
     fetchAndSaveCover(newEntry.isbn);
     const imagePath = `assets/images/covers/${newEntry.isbn}.jpg`;
+    const timeStamp = new Date();
 
     try {
-        db.query('INSERT INTO books (isbn, title, author, description, review, rating, image_path) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+        db.query('INSERT INTO books (isbn, title, author, description, review, rating, image_path, date_read) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
             [   newEntry.isbn,
                 newEntry.title,
                 newEntry.author,
                 newEntry.description,
                 newEntry.review,
                 newEntry.rating,
-                imagePath
+                imagePath,
+                timeStamp
             ]);
         res.redirect('/')
     } catch (error) {
