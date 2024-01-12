@@ -1,0 +1,44 @@
+<%- include('partials/header.ejs') %>
+
+<div class="content-container">
+    <div class="header">
+        <img src="assets/images/bookshelf.png" id="bookshelf-img" alt="image of books on a shelf">
+        <h1>Notepad: </h1><h2><%= data[0].title %></h2>
+        <p class="entry-text">by <%= data[0].author %></p>
+    </div>
+
+    <div class="log-entry-container">
+        <div>
+            <% if (data[0].image_path !== null) { %>
+                <img src="<%= data[0].image_path %>" class="book-preview-img" alt="book cover image">
+            <% } else { %>
+                <p>No book cover available</p>
+            <% } %>
+            <p class="entry-text" id="date">
+                Date: <%=data[0].date_read.toLocaleDateString('en-GB', { timeZone: 'UTC' });%>
+            </p>
+            <button class="form-button" type="button" onclick="window.location.href='/'">Return to Main Page</button>
+        </div>
+        <div>
+            <form action="/notes/submit" method="post">
+                <input type="hidden" name="bookId" value="<%= data[0].id %>">
+                <textarea class="review-input" name="newNote" autocomplete="off" autofocus="true"></textarea>
+                <button class="form-button" type="submit">Add Note</button>
+            </form>
+            <% if (data[0].note !== null) { %>
+                <% for (let i=0; i<data.length; i++) { %>
+                    <ul>
+                        <li>
+                            <p class="entry-text"><%- data[i].note %></p>
+                        </li>
+                    </ul>
+                <% } %>
+            <% } else { %>
+                <p class="entry-text">There are no notes yet.</p>
+            <% } %>
+        </div>
+
+    </div>
+</div>
+
+<%- include('partials/footer.ejs') %>

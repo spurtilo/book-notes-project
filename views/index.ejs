@@ -42,9 +42,17 @@
             <% } else { %>
                 <p>No book cover available</p>
             <% } %>
-            <p class="entry-text">
+            <p class="entry-text" id="date">
                 Date: <%=data[i].date_read.toLocaleDateString('en-GB', { timeZone: 'UTC' });%>
             </p>
+            <form action="/notes" method="post">
+                <input type="hidden" name="idForNotes" value="<%= data[i].id %>">
+                <button class="form-button" type="submit">View Notes</button>
+            </form>
+            <form action="/delete" method="post">
+                <input type="hidden" name="idToDelete" value="<%= data[i].id %>">
+                <button type="submit" class="form-button" onclick="return confirm('Are you sure you want to delete this book?')">Delete Book</button>
+            </form>
         </div>
         <div>
             <% if (data) { %>
@@ -75,21 +83,11 @@
                 <div>
                     <form action="/update" method="post">
                         <input type="hidden" name="idToUpdate" value="<%= data[i].id %>">
-                        <textarea id="input<%= data[i].id %>" class="review-input" name="updatedBookReview"
+                        <textarea id="input<%= data[i].id %>" class="review-input" name="reviewToUpdate"
                             autocomplete="off" autofocus="true" hidden="true"><%= data[i].review %></textarea>
-                    <div class="edit-delete-buttons">
-                        <div>
-                            <button id="done<%= data[i].id %>" class="form-button" type="submit" hidden>Done</button>
-                        </form>
-                            <button id="update<%= data[i].id %>" class="form-button" type="button" onclick="handler('<%= data[i].id %>')">Update review</button>
-                        </div>   
-                        <div>
-                            <form action="/delete" method="post">
-                                <input type="hidden" name="idToDelete" value="<%= data[i].id %>">
-                                <button type="submit" class="form-button" onclick="return confirm('Are you sure you want to delete this book?')">Delete book</button>
-                            </form>
-                        </div>
-                    </div>
+                        <button id="done<%= data[i].id %>" class="form-button" type="submit" hidden>Done</button>
+                    </form>
+                    <button id="update<%= data[i].id %>" class="form-button" type="button" onclick="handler('<%= data[i].id %>')">Update Review</button>
                 </div>
             </div>    
         

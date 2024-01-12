@@ -43,6 +43,14 @@ a {
     font-size: 1rem;
 }
 
+ul {
+    list-style-type: square;
+}
+
+li::marker {
+    font-size: 2rem;
+}
+
 .header-text {
     font-family: 'Proza Libre', sans-serif;
     font-size: 1.5rem;
@@ -53,11 +61,16 @@ a {
     font-size: 1rem;
 }
 
+#date {
+    padding: 0;
+    margin: 0;
+}
+
 .content-container {
     display: flex;
     flex-direction: column;
     text-align: left;
-    max-width: 56rem;
+    max-width: 57rem;
     min-height: 100%;
     padding: 1.5rem;
     background-color: white;
@@ -105,13 +118,6 @@ a {
     margin-bottom: 3rem;
     gap: 1rem;
     border-bottom: 2px solid #DFDFDF;
-}
-
-.edit-delete-buttons {
-    display: flex;
-    flex-direction: row;
-    margin-top: 2rem;
-    gap: 1rem;
 }
 
 .star-rating-container {
@@ -163,6 +169,7 @@ a {
 .form-button {
     min-width: 7rem;
     padding: 0.5rem;
+    margin-top: 1rem;
 }
 .label {
     display: grid;
