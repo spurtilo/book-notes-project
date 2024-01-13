@@ -25,7 +25,7 @@
     </div>
     <div class="entry-text" id="sorting-options-wrapper">
         <form action="/sort" method="post">
-            <label for="sorting">Sort by:</label>
+            <label for="sorting">Sort Books by:</label>
             <select name="sortBy" id="sorting-dropdown" onchange="this.form.submit()">
             <option value="title" <% if (sortOption === "title") { %>selected<% } %>>Title</option>
             <option value="date" <% if (sortOption === "date") { %>selected<% } %>>Date read</option>
@@ -49,8 +49,8 @@
                 <input type="hidden" name="idForNotes" value="<%= data[i].id %>">
                 <button class="form-button" type="submit">View Notes</button>
             </form>
-            <form action="/delete" method="post">
-                <input type="hidden" name="idToDelete" value="<%= data[i].id %>">
+            <form action="/delete/book" method="post">
+                <input type="hidden" name="bookToDelete" value="<%= data[i].id %>">
                 <button type="submit" class="form-button" onclick="return confirm('Are you sure you want to delete this book?')">Delete Book</button>
             </form>
         </div>
@@ -66,12 +66,12 @@
                 <div class="star-rating-container">
                     <% const rating = data[i].rating; %>
                     <% for (let i=0; i<rating; i++) { %>
-                        <img src="assets/images/star-icon-filled.png" class="star" alt="filled star icon">
+                        <img src="assets/images/star-icon-filled.png" class="star-icon" alt="filled star icon">
                     <% } %>
                     <% if (rating < 5) { %>
                         <% const empties = 5 - data[i].rating; %>
                         <% for (let i=0; i<empties; i++) { %>
-                            <img src="assets/images/star-icon-empty.png" class="star" alt="empty star icon">
+                            <img src="assets/images/star-icon-empty.png" class="star-icon" alt="empty star icon">
                         <% } %>
                     <% } %>
                 </div>
@@ -81,8 +81,8 @@
                     <%- data[i].review %>
                 </div>
                 <div>
-                    <form action="/update" method="post">
-                        <input type="hidden" name="idToUpdate" value="<%= data[i].id %>">
+                    <form action="/update/review" method="post">
+                        <input type="hidden" name="reviewIdToUpdate" value="<%= data[i].id %>">
                         <textarea id="input<%= data[i].id %>" class="review-input" name="reviewToUpdate"
                             autocomplete="off" autofocus="true" hidden="true"><%= data[i].review %></textarea>
                         <button id="done<%= data[i].id %>" class="form-button" type="submit" hidden>Done</button>

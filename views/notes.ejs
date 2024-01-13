@@ -19,7 +19,7 @@
             </p>
             <button class="form-button" type="button" onclick="window.location.href='/'">Return to Main Page</button>
         </div>
-        <div>
+        <div id="note-wrapper">
             <form action="/notes/submit" method="post">
                 <input type="hidden" name="bookId" value="<%= data[0].id %>">
                 <textarea class="review-input" name="newNote" autocomplete="off" autofocus="true"></textarea>
@@ -29,7 +29,21 @@
                 <% for (let i=0; i<data.length; i++) { %>
                     <ul>
                         <li>
-                            <p class="entry-text"><%- data[i].note %></p>
+                            <form action="/delete/note" method="post">
+                                <input type="hidden" name="noteIdToDelete" value="<%= data[i].id %>">
+                                <input type="image" id="delete<%= data[i].id %>" class="ed-icon" src="assets/images/delete-icon.png" 
+                                onclick="return confirm('Are you sure you want to delete this note?')" alt="Delete" />
+                            </form>
+
+                            <form action="/update/note" method="post">
+                                <input type="hidden" name="noteIdToUpdate" value="<%= data[i].id %>">
+                                <textarea id="input<%= data[i].id %>" class="review-input" name="noteToUpdate"
+                                    autocomplete="off" autofocus="true" hidden="true"><%- data[i].note %></textarea>
+                                <button id="done<%= data[i].id %>" class="form-button" type="submit" hidden>Done</button>
+                            </form>
+                            <input type="image" id="edit<%= data[i].id %>" class="ed-icon" src="assets/images/edit-icon.png" 
+                            onclick="handler('<%= data[i].id %>')" alt="Edit" />
+                            <p id="note<%= data[i].id %>" class="entry-text"><%- data[i].note %></p>
                         </li>
                     </ul>
                 <% } %>
@@ -37,8 +51,18 @@
                 <p class="entry-text">There are no notes yet.</p>
             <% } %>
         </div>
-
     </div>
 </div>
 
+<script>
+    function handler(id) {
+      document.getElementById("note" + id).setAttribute("hidden", true)
+      document.getElementById("edit" + id).setAttribute("hidden", true)
+      document.getElementById("delete" + id).setAttribute("hidden", true)
+      document.getElementById("done" + id).removeAttribute("hidden")
+      document.getElementById("input" + id).removeAttribute("hidden")
+
+      event.preventDefault();
+    }
+</script>
 <%- include('partials/footer.ejs') %>

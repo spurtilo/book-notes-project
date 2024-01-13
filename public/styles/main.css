@@ -3,12 +3,10 @@ html {
     background-color: #F5F5F5;
     height: 100%;
 }
-
 body {
     margin: 0;
     height: 100%;
 }
-
 main {
     display: flex;
     justify-content: center;
@@ -18,48 +16,36 @@ main {
     margin: 0;
 }
 
+/* FONTS */
 h1, h2, h3 {
     font-family: 'Cormorant Garamond', serif;
     margin: 0;
     padding: 0;
 }
-
-h1 {
-    font-size: 4rem;
-}
-
-h2 {
-    font-size: 3rem;
-}
-
+h1 { font-size: 4rem; }
+h2 { font-size: 3rem; }
 h3 {
     font-size: 1.5rem;
     font-weight: 600;
 }
-
-a {
-    font-family: 'Proza Libre', sans-serif;
-    color:black;
-    font-size: 1rem;
-}
-
-ul {
-    list-style-type: square;
-}
-
-li::marker {
-    font-size: 2rem;
-}
-
 .header-text {
     font-family: 'Proza Libre', sans-serif;
     font-size: 1.5rem;
 }
-
 .entry-text {
     font-family: 'Proza Libre', sans-serif;
     font-size: 1rem;
 }
+
+/* UNORDERED LIST */
+ul {
+    list-style-type: square;
+}
+li::marker {
+    font-size: 2rem;
+}
+
+
 
 #date {
     padding: 0;
@@ -92,11 +78,11 @@ li::marker {
 .nav-button {
     flex: 1;
     max-width: 13rem;
-    transition: transform 0.3s ease-in-out
+    transition: transform 0.1s ease-in-out
 }
 
 .nav-button:hover {
-    transform: scale(1.05);
+    transform: scale(1.04);
 }
 
 #bookshelf-img {
@@ -127,8 +113,18 @@ li::marker {
     margin-bottom: 1rem;
     gap: 1rem;
 }
-.star {
+.star-icon {
     height: 1rem;
+}
+
+.ed-icon {
+    height: 1.2rem;
+    padding: 0.4rem;
+    float: right;
+    transition: transform 0.1s ease-in-out
+}
+.ed-icon:hover {
+    transform: scale(1.07);
 }
 
 .form-wrapper {
@@ -137,6 +133,10 @@ li::marker {
     font-size: 1rem;
     margin-top: 2rem;
     margin-bottom: 6rem;
+}
+
+#note-wrapper {
+    max-width: 43rem;
 }
 
 .form-row {
@@ -158,7 +158,7 @@ li::marker {
 }
 
 .review-input {
-    width: 100%;
+    min-width: 100%;
     min-height: 10rem;
     max-width: 43rem;
     padding: 0.5rem 0.5rem;

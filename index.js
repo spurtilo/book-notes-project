@@ -47,26 +47,39 @@ async function fetchAndSaveCover(isbn) {
 
 async function fetchNotes(id) {
     const result = await db.query(
-        'SELECT books.id, title, author, image_path, date_read, notes.note FROM books LEFT JOIN notes ON books.id = notes.book_id WHERE books.id = $1', [id]);
-    console.log(result.rows);
-    return result.rows;
+        'SELECT notes.id, title, author, image_path, date_read, notes.note FROM books LEFT JOIN notes ON books.id = notes.book_id WHERE books.id = $1 ORDER BY id DESC', [id]);
+        return result.rows;
 }
 
 async function formatData(data) {
+    if (data[0].description || data[0].review || data[0].note) {
 
-    data.forEach((item) =>{
-        if (item.description && !item.description.includes('<br>') && item.description.includes('\n')) {
-            item.description = item.description.split('\n').join('<br>');
-        }
-    
-        if (item.review && !item.review.includes('<br>') && item.review.includes('\n')) {
-            item.review  = item.review.split('\n').join('<br>');
-        }
+        data.forEach((item) => {
+            // Format description
+            if (item.description) {
+                item.description = item.description.replace(/<br>/g, ''); // Remove existing <br> tags
+                if (item.description.includes('\n')) {
+                    item.description = item.description.split('\n').join('<br>'); // Replace newline characters
+                }
+            }
 
-        if (item.note && !item.note.includes('<br>') && item.note.includes('\n')) {
-            item.note  = item.note.split('\n').join('<br>');
-        }
-    });
+            // Format review
+            if (item.review) {
+                item.review = item.review.replace(/<br>/g, '');
+                if (item.review.includes('\n')) {
+                    item.review = item.review.split('\n').join('<br>');
+                }
+            }
+
+            // Format note
+            if (item.note) {
+                item.note = item.note.replace(/<br>/g, '');
+                if (item.note.includes('\n')) {
+                    item.note = item.note.split('\n').join('<br>');
+                }
+            }
+        });
+    }
     return data;
 }
 
@@ -167,9 +180,33 @@ app.get('/notes', async (req, res) => {
     }
 });
 
-app.post('/update', async (req, res) => {
+
+app.post('/update/note', async (req, res) => {
+    const updatedNote = req.body.noteToUpdate;
+    const updateNoteId = req.body.noteIdToUpdate;
+    
+    try {
+        await db.query('UPDATE notes SET note = ($1) WHERE id = $2', [updatedNote, updateNoteId]);
+        res.redirect('/notes');
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+app.post('/delete/note', async (req, res) => {
+    const deleteNoteId = req.body.noteIdToDelete;
+
+    try {
+       await db.query('DELETE FROM notes WHERE id = $1', [deleteNoteId]);
+       res.redirect('/notes');
+    } catch (error) {
+       console.log(error);
+    }
+   });
+
+app.post('/update/review', async (req, res) => {
     const updatedReview = req.body.reviewToUpdate;
-    currentBookId = req.body.idToUpdate;
+    currentBookId = req.body.reviewIdToUpdate;
     
     try {
         await db.query('UPDATE books SET review = ($1) WHERE id = $2', [updatedReview, currentBookId]);
@@ -179,11 +216,11 @@ app.post('/update', async (req, res) => {
     }
 });
 
-app.post('/delete', async (req, res) => {
- const deleteId = req.body.idToDelete;
+app.post('/delete/book', async (req, res) => {
+ const deleteBookId = req.body.bookToDelete;
 
  try {
-    await db.query('DELETE FROM books WHERE id = $1', [deleteId]);
+    await db.query('DELETE FROM books WHERE id = $1', [deleteBookId]);
     res.redirect('/')
  } catch (error) {
     console.log(error);
