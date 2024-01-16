@@ -16,7 +16,44 @@ main {
     margin: 0;
 }
 
+/* CONTAINERS */
+
+.content-container {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    max-width: 57rem;
+    min-height: 100%;
+    padding: 1rem;
+    background-color: white;
+}
+.navbar {
+    display: flex;
+    gap: 1rem;
+    padding-bottom: 3rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #DFDFDF;
+}
+.log-entry-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 95%;
+    margin-top: 0;
+    padding-bottom: 3rem;
+    margin-bottom: 3rem;
+    gap: 1rem;
+    border-bottom: 2px solid #DFDFDF;
+}
+.star-rating-container {
+    display: flex;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    gap: 1rem;
+}
+
 /* FONTS */
+
 h1, h2, h3 {
     font-family: 'Cormorant Garamond', serif;
     margin: 0;
@@ -37,96 +74,40 @@ h3 {
     font-size: 1rem;
 }
 
-/* UNORDERED LIST */
-ul {
-    list-style-type: square;
-}
-li::marker {
-    font-size: 2rem;
-}
+/* IMAGES */
 
-
-
-#date {
-    padding: 0;
-    margin: 0;
-}
-
-.content-container {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    max-width: 57rem;
-    min-height: 100%;
-    padding: 1.5rem;
-    background-color: white;
-}
-
-.row {
-    flex: 1;
-    width: 100%
-}
-
-.navbar {
-    display: flex;
-    gap: 1rem;
-    padding-bottom: 3rem;
-    margin-bottom: 1rem;
-    border-bottom: 2px solid #DFDFDF;
-}
+#bookshelf-img { width: 100%; }
 
 .nav-button {
     flex: 1;
     max-width: 13rem;
     transition: transform 0.1s ease-in-out
 }
-
-.nav-button:hover {
-    transform: scale(1.04);
-}
-
-#bookshelf-img {
-    width: 100%;
-}
+.nav-button:hover { transform: scale(1.04); }
 
 .book-preview-img {
     max-width: 13rem;
     float: left;
     margin-bottom: 1rem;
 }
-
-.log-entry-container {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    margin-top: 0;
-    padding-bottom: 3rem;
-    margin-bottom: 3rem;
-    gap: 1rem;
-    border-bottom: 2px solid #DFDFDF;
-}
-
-.star-rating-container {
-    display: flex;
-    flex-direction: row;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    gap: 1rem;
-}
-.star-icon {
-    height: 1rem;
-}
+.star-icon { height: 1rem; }
 
 .ed-icon {
     height: 1.2rem;
-    padding: 0.4rem;
+    padding-left: 0.8rem;
     float: right;
     transition: transform 0.1s ease-in-out
 }
-.ed-icon:hover {
-    transform: scale(1.07);
-}
+.ed-icon:hover { transform: scale(1.07); }
 
+/* FORMS & INPUTS */
+
+#sorting-dropdown {
+    width: 6.5rem;
+    padding: 0.5rem 0.5rem;
+    margin-left: 0.5rem;
+    margin-bottom: 4rem;
+}
 .form-wrapper {
     display: grid;
     font-family: 'Proza Libre', sans-serif;
@@ -134,38 +115,15 @@ li::marker {
     margin-top: 2rem;
     margin-bottom: 6rem;
 }
-
-#note-wrapper {
-    max-width: 43rem;
-}
-
 .form-row {
     display: grid;
     grid-template-columns: 1fr 3fr 2fr;
     padding-bottom: 1.5rem;
 }
-
-.newentry-button-row {
-    display: grid;
-    justify-items: space-between;
-    grid-template-columns: 1fr 1.4fr 0.2fr 1.4fr 2fr;
-}
-
 .form-field {
     width: 100%;
-    padding: 0.5rem 0.5rem;
-    
+    padding: 0.5rem 0.5rem; 
 }
-
-.review-input {
-    min-width: 100%;
-    min-height: 10rem;
-    max-width: 43rem;
-    padding: 0.5rem 0.5rem;
-    text-align: justify;
-    white-space: pre-line;
-}
-
 .form-button {
     min-width: 7rem;
     padding: 0.5rem;
@@ -175,16 +133,34 @@ li::marker {
     display: grid;
     justify-items: start;
 }
-
-#sorting-options-wrapper {
-    width: 100%;
-    margin-bottom: 4rem;
-}
-#sorting-dropdown {
-    width: 6.5rem;
+.review-input {
+    min-width: 100%;
+    min-height: 10rem;
+    max-width: 43rem;
     padding: 0.5rem 0.5rem;
-    margin-left: 0.5rem;
+    text-align: left;
+    white-space: pre-line;
 }
+.newentry-button-row {
+    display: grid;
+    grid-template-columns: 1fr 1.0fr 0.1fr 1.9fr 2fr;
+}
+.note-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* LISTS */
+
+ul {
+    list-style-type: square;
+}
+li::marker {
+    font-size: 2rem;
+}
+
+/* MEDIA QUERIES */
 
 @media screen and (max-width: 1024px) {
     html {

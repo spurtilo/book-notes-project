@@ -1,56 +1,70 @@
 <%- include('partials/header.ejs') %>
 
 <div class="content-container">
-    <div class="header">
+    <div>
         <img src="assets/images/bookshelf.png" id="bookshelf-img" alt="image of books on a shelf">
         <h1>Notepad: </h1><h2><%= data[0].title %></h2>
         <p class="entry-text">by <%= data[0].author %></p>
     </div>
-
+    <!-- ENTRY CONTAINER -->
     <div class="log-entry-container">
         <div>
-            <% if (data[0].image_path !== null) { %>
-                <img src="<%= data[0].image_path %>" class="book-preview-img" alt="book cover image">
-            <% } else { %>
-                <p>No book cover available</p>
-            <% } %>
-            <p class="entry-text" id="date">
-                Date: <%=data[0].date_read.toLocaleDateString('en-GB', { timeZone: 'UTC' });%>
-            </p>
-            <button class="form-button" type="button" onclick="window.location.href='/'">Return to Main Page</button>
-        </div>
-        <div id="note-wrapper">
-            <form action="/notes/submit" method="post">
-                <input type="hidden" name="bookId" value="<%= data[0].id %>">
-                <textarea class="review-input" name="newNote" autocomplete="off" autofocus="true"></textarea>
-                <button class="form-button" type="submit">Add Note</button>
-            </form>
-            <% if (data[0].note !== null) { %>
-                <% for (let i=0; i<data.length; i++) { %>
-                    <ul>
-                        <li>
-                            <form action="/delete/note" method="post">
-                                <input type="hidden" name="noteIdToDelete" value="<%= data[i].id %>">
-                                <input type="image" id="delete<%= data[i].id %>" class="ed-icon" src="assets/images/delete-icon.png" 
-                                onclick="return confirm('Are you sure you want to delete this note?')" alt="Delete" />
-                            </form>
-
-                            <form action="/update/note" method="post">
-                                <input type="hidden" name="noteIdToUpdate" value="<%= data[i].id %>">
-                                <textarea id="input<%= data[i].id %>" class="review-input" name="noteToUpdate"
-                                    autocomplete="off" autofocus="true" hidden="true"><%- data[i].note %></textarea>
-                                <button id="done<%= data[i].id %>" class="form-button" type="submit" hidden>Done</button>
-                            </form>
-                            <input type="image" id="edit<%= data[i].id %>" class="ed-icon" src="assets/images/edit-icon.png" 
-                            onclick="handler('<%= data[i].id %>')" alt="Edit" />
-                            <p id="note<%= data[i].id %>" class="entry-text"><%- data[i].note %></p>
-                        </li>
-                    </ul>
+            <div>
+                <% if (data[0].image_path !== null) { %>
+                    <img src="<%= data[0].image_path %>" class="book-preview-img" alt="book cover image">
+                <% } else { %>
+                    <p>No book cover available</p>
                 <% } %>
-            <% } else { %>
-                <p class="entry-text">There are no notes yet.</p>
-            <% } %>
+            </div>
+            <div class="entry-text">
+                Date: <%=data[0].date_read.toLocaleDateString('en-GB', { timeZone: 'UTC' });%>
+            </div>
+            <div>
+                <button class="form-button" type="button" onclick="window.location.href='/'">Return to Main Page</button>
+            </div>
         </div>
+        
+        <!-- NOTE WRAPPER -->
+        <div class="note-wrapper">
+            <div class="add-note-form">
+                <form action="/notes/submit" method="post">
+                    <input type="hidden" name="bookId" value="<%= data[0].id %>">
+                    <textarea class="review-input" name="newNote" autocomplete="off" autofocus="true"></textarea>
+                    <button class="form-button" type="submit">Add Note</button>
+                </form>
+            </div>
+            <div>
+                <% if (data[0].note !== null) { %>
+                    <% for (let i=0; i<data.length; i++) { %>
+                        <ul>
+                            <li>
+                                <div>
+                                    <form action="/delete/note" method="post">
+                                        <input type="hidden" name="noteIdToDelete" value="<%= data[i].id %>">
+                                        <input type="image" id="delete<%= data[i].id %>" class="ed-icon" src="assets/images/delete-icon.png" 
+                                        onclick="return confirm('Are you sure you want to delete this note?')" alt="Delete" />
+                                    </form>
+                                    <input type="image" id="edit<%= data[i].id %>" class="ed-icon" src="assets/images/edit-icon.png" 
+                                    onclick="handler('<%= data[i].id %>')" alt="Edit" />
+                                    <div id="note<%= data[i].id %>" class="entry-text list-item"><%- data[i].note %></div>
+                                </div>
+                                <div>
+                                    <form action="/update/note" method="post">
+                                        <input type="hidden" name="noteIdToUpdate" value="<%= data[i].id %>">
+                                        <textarea id="input<%= data[i].id %>" class="review-input" name="noteToUpdate"
+                                        autocomplete="off" autofocus="true" hidden="true"><%- data[i].note %></textarea>
+                                        <button id="done<%= data[i].id %>" class="form-button" type="submit" hidden>Done</button>
+                                    </form>
+                                </div>
+                            </li>
+                        </ul>
+                    <% } %>
+                <% } else { %>
+                    <p class="entry-text">There are no notes yet.</p>
+                <% } %>
+            </div>
+        </div>
+
     </div>
 </div>
 
