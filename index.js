@@ -51,7 +51,7 @@ async function fetchAndSaveCover(isbn) {
         console.log(`Image saved: ${fileName}.jpg`);
     } catch (error) {
         // Log any errors that occur during the fetch or save process.
-        console.log(error); 
+        console.log('Error fetching or saving cover image: ', error); 
     }
 }
 
@@ -169,12 +169,13 @@ app.post('/sort', (req, res) => {
     res.redirect('/')
 });
 
-// Handle POST request for '/notes'.
-app.post('/notes', async (req, res) => {
-    // 'View Notes' button on the main page passes a book id to the server that is assigned to currentBookId global variable.
-    currentBookId = req.body.idForNotes;
+// Handle GET route for '/notes/:id' to display notes for a specific book.
+app.get('/notes/:id', async (req, res) => {
+    // Get book id from URL parameter and assign to currentBookId global variable.
+    currentBookId = req.params.id;
+
     try {
-        const notes = await fetchNotes(currentBookId); // Pass id to fetchNotes.
+        const notes = await fetchNotes(currentBookId); // Fetch notes for the specified book id.
         const formattedNotes = await formatData(notes); // Format notes.
 
         res.render('notes.ejs', { data: formattedNotes }); // Render notes.ejs and send over required data.
@@ -183,65 +184,54 @@ app.post('/notes', async (req, res) => {
     }
 });
 
-// Handle POST request for '/notes/add'.
-// For adding new notes.
+// Handle POST request for '/notes/add' to add new notes.
 app.post('/notes/add', async (req, res) => {
     const note = req.body.newNote;
+
     // Pass note string from HTML input to server and save to database using the currentBookId.
     try {
         await db.query('INSERT INTO notes (note, book_id) VALUES ($1, $2)', [note, currentBookId]);
 
-        res.redirect('/notes'); // res.redirect hits the GET route /notes.
+        res.redirect(`/notes/${currentBookId}`); // res.redirect reloads the page by hitting the GET route /notes/:id.
     } catch (error) {
         console.log(error);
     }
 });
 
-// Handle POST request for '/notes/update'.
-// For updating a note.
-app.post('/notes/update', async (req, res) => {
+// Handle POST request for '/notes/update' to update a note.
+app.post('/notes/update/:id', async (req, res) => {
     const updatedNote = req.body.noteToUpdate;
-    const updateNoteId = req.body.noteIdToUpdate;
-    // Pass note id and the note to update to server.
+    const updateNoteId = req.params.id;
+    
+    // Pass the note id and the note to server.
     // Make database query to update the note.
     try {
         await db.query('UPDATE notes SET note = ($1) WHERE id = $2', [updatedNote, updateNoteId]);
-        res.redirect('/notes');
+        res.redirect(`/notes/${currentBookId}`);
     } catch (error) {
         console.log(error);
     }
 });
 
-// Handle POST request for '/notes/delete'.
-// For deleting a note.
-app.post('/notes/delete', async (req, res) => {
-    const deleteNoteId = req.body.noteIdToDelete;
+// Handle POST request for '/notes/delete' to delete a note.
+app.post('/notes/delete/:id', async (req, res) => {
+    const deleteNoteId = req.params.id;
     // Pass a note id from delete button to server.
     // Make database query to delete a note using this id.
     try {
        await db.query('DELETE FROM notes WHERE id = $1', [deleteNoteId]);
-       res.redirect('/notes');
+       res.redirect(`/notes/${currentBookId}`);
     } catch (error) {
        console.log(error);
     }
    });
 
-// Handle GET request for '/notes'.
-// Render the notes.ejs with required data after adding, updating or deleting a note.
-app.get('/notes', async (req, res) => {
-    try {
-        const notes = await fetchNotes(currentBookId);
-        const formattedNotes = await formatData(notes);
-        res.render('notes.ejs', { data: formattedNotes });
-    } catch (error) {
-        console.log(error);
-    }
-});
-
-app.post('/update/review', async (req, res) => {
+// Handle POST route for '/update/review/:id' to update a book review.
+app.post('/update/review/:id', async (req, res) => {
     const updatedReview = req.body.reviewToUpdate;
-    currentBookId = req.body.reviewIdToUpdate;
-    
+    currentBookId = req.params.id;
+    // Pass the review to update and the book id to server.
+    // Make a database query to update the review.
     try {
         await db.query('UPDATE books SET review = ($1) WHERE id = $2', [updatedReview, currentBookId]);
         res.redirect('/');
@@ -250,9 +240,11 @@ app.post('/update/review', async (req, res) => {
     }
 });
 
-app.post('/delete/book', async (req, res) => {
- const deleteBookId = req.body.bookToDelete;
-
+// Handle POST route for '/delete/book/:id' to delete a book.
+app.post('/delete/book/:id', async (req, res) => {
+ const deleteBookId = req.params.id;
+    // Pass book id to server
+    // Make a database query to delete the book.
  try {
     await db.query('DELETE FROM books WHERE id = $1', [deleteBookId]);
     res.redirect('/')
@@ -261,6 +253,7 @@ app.post('/delete/book', async (req, res) => {
  }
 });
 
+// Start the server and listen on port 3000.
 app.listen(port, () => {
     console.log('Server running on port 3000');
 });
