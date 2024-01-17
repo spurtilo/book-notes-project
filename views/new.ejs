@@ -11,13 +11,14 @@
             <div class="label">
                 <label for="book-search">Search for a book:</label>
             </div>
-            <div>
+            <div><!-- This is a search bar that fetches book details from Open Library Search API as json files. -->
+                <!-- I was planning to put in an autocomplete feature but it will be left for possible future development.  -->
                 <input type="search" class="form-field" id="book-search" placeholder="Enter a book name, author or ISBN"
                 autocomplete="off" />
                 <button hidden>Search</button>
             </div>
         </div>
-
+        <!-- This form hits the POST route '/new-entry/add' and passes over all the required data for a new log entry. -->
         <form autocomplete="off" action="/new-entry/add" method="post">
             <div class="form-row">
                 <div class="label">
@@ -91,5 +92,5 @@
 
 </div>
 
-<script src="js/XMLHttpRequest.js"></script>
+<script src="js/XMLHttpRequest.js"></script> <!-- This is belongs to the incomplete search bar feature. -->
 <%- include('partials/footer.ejs') %>
