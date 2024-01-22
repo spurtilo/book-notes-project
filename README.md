@@ -41,7 +41,7 @@ The application was built with Express.js for server-side functionality, EJS for
 * Other book details are fetched from the [Open Library Search API](https://openlibrary.org/dev/docs/api/search) as JSON files using an XMLHttpRequest. A search field has already been put in on top of the new entry form. A change in the input value of this field triggers the XMLHttpRequest function. The response data could be used to implement an autocomplete feature for the search field. This feature will be left for possible future development.
 
 #### Frontend Rendering
-* EJS files are utilized for dynamic frontend rendering, handling the display of book details, cover images, and notes.
+* EJS files with HTML are utilized for dynamic frontend rendering, handling the display of book details, cover images, and notes. Additionally, CSS is used for styling, layout and responsiveness.
 
 #### Data Persistence
 * A PostgreSQL database created with pgAdmin is used for data persistence.
@@ -88,3 +88,6 @@ The application was built with Express.js for server-side functionality, EJS for
 6. Start the server using `npm start`.
 
 7. Access the website in your browser at `http://localhost:3000`.
+
+## Screenshots
+
