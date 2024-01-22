@@ -103,6 +103,6 @@ The application was built with Express.js for server-side functionality, EJS for
 
 ![New logbook entry form](public/assets/images/screenshots/screen3.png)
 
-4. **Notepad with listed notes and `Add Note` feature**
+4. **Notepad with notes listing and `Add Note`, `Update Note` and `Delete Note` features**
 
 ![Notepad](public/assets/images/screenshots/screen4.png)
