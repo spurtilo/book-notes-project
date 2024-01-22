@@ -92,10 +92,17 @@ The application was built with Express.js for server-side functionality, EJS for
 ## Screenshots
 
 1. **Header of the page and the sort dropdown menu**
+
 ![Header of the page](public/assets/images/screenshots/screen1.png)
+
 2. **Book entries with `View Notes`, `Delete Book` and `Update Review` features**
+
 ![Book entries listing](public/assets/images/screenshots/screen2.png)
+
 3. **New logbook entry form**
+
 ![New logbook entry form](public/assets/images/screenshots/screen3.png)
+
 4. **Notepad with listed notes and `Add Note` feature**
+
 ![Notepad](public/assets/images/screenshots/screen4.png)
