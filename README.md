@@ -52,21 +52,39 @@ The application was built with Express.js for server-side functionality, EJS for
 * Animated star rating
 * Autocomplete feature for populating the new entry form with book details
 
-## How to run locally
-1. Clone this repository.
-2. Navigate to the project directory.
-3. Install dependencies using `npm install`.
+## How to Run Locally
 
-4. Create a database with pgAdmin and tables 'books' and 'notes' with appropriate columns:
-  * books table: id (primary key), isbn, title, author, description, review, rating, image_path, date_read
-  * notes table: id (primary key), note, book_id (foreign key referencing books.id)
+1. **Clone this repository.**
+   
+2. **Navigate to the project directory.**
+   
+3. **Install dependencies using `npm install`.**
+   
+4. **Create a database with pgAdmin and tables 'books' and 'notes' with appropriate columns:**
+   * **books table:**
+     * id (primary key)
+     * isbn
+     * title
+     * author
+     * description
+     * review
+     * rating
+     * image_path
+     * date_read
 
-5. Create a .env file to your project directory with your database connection details:
-  DB_USER="your_username"
-  DB_HOST="your_host_address"
-  DB_DATABASE="your_database_name"
-  DB_PASSWORD="your_password"
-  DB_PORT="your_database_port"
+   * **notes table:**
+     * id (primary key)
+     * note
+     * book_id (foreign key referencing books.id)
+
+5. **Create a .env file in your project directory with your database connection details:**
+   ```env
+   DB_USER="your_username"
+   DB_HOST="your_host_address"
+   DB_DATABASE="your_database_name"
+   DB_PASSWORD="your_password"
+   DB_PORT="your_database_port"
 
 6. Start the server using `npm start`.
+
 7. Access the website in your browser at `http://localhost:3000`.
