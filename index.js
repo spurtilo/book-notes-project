@@ -240,13 +240,16 @@ app.post('/update/review/:id', async (req, res) => {
     }
 });
 
-// Handle POST route for '/delete/book/:id' to delete a book.
+// Handle POST route for '/delete/book/:id' to delete a book and its notes.
 app.post('/delete/book/:id', async (req, res) => {
  const deleteBookId = req.params.id;
     // Pass book id to server
-    // Make a database query to delete the book.
+    // Make two database queries for deletion.
  try {
+    await db.query('DELETE FROM notes WHERE book_id = $1', [deleteBookId]);
+
     await db.query('DELETE FROM books WHERE id = $1', [deleteBookId]);
+
     res.redirect('/')
  } catch (error) {
     console.log(error);
