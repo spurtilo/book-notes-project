@@ -31,7 +31,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 let bookDetails = []; // Initialize bookDetails
-let currentSortOption = 'title'; // Default sorting option.
 let currentBookId = null; // Variable for passing data between functions/methods.
 
 // Function to fetch and save book cover image from Open Library Covers API.
@@ -103,20 +102,20 @@ function formatData(data) {
 
 // Handle GET request for the root path.
 app.get('/', async (req, res) => {
+    const currentSortOption = req.query.sort; // Sort option is passed as query parameter.
+    let result = null;
+
     try {
-        let result = null;
-        // Sort the books using ORDER BY according to chosen sorting option.
-        if (currentSortOption === 'title') {
+        // Sort the books using ORDER BY according to chosen sort option.
+        if (currentSortOption === undefined || currentSortOption === 'title') {
             result = await db.query(
                 'SELECT * FROM books ORDER BY title ASC');
         }
-
-        if (currentSortOption === 'date') {
+        else if (currentSortOption === 'date') {
             result = await db.query(
                 'SELECT * FROM books ORDER BY date_read DESC');
         }
-
-        if (currentSortOption === 'rating') {
+        else if (currentSortOption === 'rating') {
             result = await db.query(
                 'SELECT * FROM books ORDER BY rating DESC');
         }
@@ -159,14 +158,6 @@ app.post('/new-entry/add', async (req, res) => {
     } catch (error) {
         console.log(error);
     }
-});
-
-// Handle POST request for '/sort'.
-app.post('/sort', (req, res) => {
-    // Sorting choice is passed over from the sort dropdown menu and
-    // assigned to the currentSortOption global variable.
-    currentSortOption = req.body.sortBy; 
-    res.redirect('/')
 });
 
 // Handle GET route for '/notes/:id' to display notes for a specific book.

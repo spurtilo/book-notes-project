@@ -32,9 +32,9 @@
     <!-- This dropdown menu lets you choose a sorting option and on value change hits the POST route for '/sort'. -->
     <!-- Attribute 'selected' is dynamically added to display the correct option on page reload. -->
     <div>
-        <form action="/sort" method="post">
-            <label for="sorting">Sort Books by:</label>
-            <select name="sortBy" id="sorting-dropdown" onchange="this.form.submit()">
+        <form action="/" method="get">
+            <label for="sorting-dropdown">Sort Books by:</label>
+            <select name="sort" id="sorting-dropdown" onchange="this.form.submit()">
             <option value="title" <% if (sortOption === "title") { %>selected<% } %>>Title</option>
             <option value="date" <% if (sortOption === "date") { %>selected<% } %>>Date read</option>
             <option value="rating" <% if (sortOption === "rating") { %>selected<% } %>>Rating</option>
