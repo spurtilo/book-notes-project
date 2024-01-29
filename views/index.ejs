@@ -23,19 +23,19 @@
         <div>        
             <a href="/new-entry"><img src="assets/images/button1.png" class="nav-button" alt="navigation button new entry"></a>
         </div>
-        <div><!-- As of now, this is button is mostly 'decorative'. -->
+        <div><!-- As of now, this button is mostly 'decorative'. -->
             <a href="/about"><img src="assets/images/button2.png" class="nav-button" alt="navigation button about"></a>
         </div>
     </div>
 
-    <!-- SORTING DROPDOWN -->
-    <!-- This dropdown menu lets you choose a sorting option and on value change hits the POST route for '/sort'. -->
+    <!-- This dropdown menu lets you choose a sorting option. -->
+    <!-- When value changes it hits the GET route '/' and passes the sort option as a query parameter. -->
     <!-- Attribute 'selected' is dynamically added to display the correct option on page reload. -->
     <div>
         <form action="/" method="get">
             <label for="sorting-dropdown">Sort Books by:</label>
             <select name="sort" id="sorting-dropdown" onchange="this.form.submit()">
-            <option value="title" <% if (sortOption === "title") { %>selected<% } %>>Title</option>
+            <option value="title" <% if (sortOption === "title" || sortOption === undefined) { %>selected<% } %>>Title</option>
             <option value="date" <% if (sortOption === "date") { %>selected<% } %>>Date read</option>
             <option value="rating" <% if (sortOption === "rating") { %>selected<% } %>>Rating</option>
             </select>
@@ -62,8 +62,8 @@
                     <button class="form-button" type="submit">View Notes</button>
                 </form>
             </div>
-            <div><!-- This form hits the POST route '/delete/book/:id' and passes over book ID as a URL parameter. -->
-                <form action="/delete/book/<%= data[i].id %>" method="post">
+            <div><!-- This form hits the POST route '/books/:bookId/delete' and passes over book ID as a URL parameter. -->
+                <form action="/books/<%= data[i].id %>/delete" method="post">
                     <button type="submit" class="form-button" onclick="return confirm('Are you sure you want to delete this book?')">Delete Book</button>
                 </form>
             </div>
@@ -97,7 +97,7 @@
                     <%- data[i].review %>
                 </div>
                 <div><!-- This form hits the POST route '/update/review/:id' and passes over a book ID and a review to update  -->
-                    <form action="/update/review/<%= data[i].id %>" method="post">
+                    <form action="/reviews/<%= data[i].id %>/update" method="post">
                         <textarea id="input<%= data[i].id %>" class="review-input" name="reviewToUpdate"
                             autocomplete="off" autofocus="true" hidden="true"><%= data[i].review %></textarea>
                         <button id="done<%= data[i].id %>" class="form-button" type="submit" hidden>Done</button>

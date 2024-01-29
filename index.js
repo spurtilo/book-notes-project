@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 let bookDetails = []; // Initialize bookDetails
-let currentBookId = null; // Variable for passing data between functions/methods.
+// let currentBookId = null; // Variable for passing data between functions/methods.
 
 // Function to fetch and save book cover image from Open Library Covers API.
 async function fetchAndSaveCover(isbn) {
@@ -60,7 +60,7 @@ async function fetchNotes(id) {
         // Make a database query selecting relevant columns.
         // Use LEFT JOIN to combine data from the "books" and "notes" tables including notes if available.
         const result = await db.query(
-            'SELECT notes.id, title, author, image_path, date_read, notes.note FROM books LEFT JOIN notes ON books.id = notes.book_id WHERE books.id = $1 ORDER BY id DESC', [id]);
+            'SELECT notes.id, notes.book_id, title, author, image_path, date_read, notes.note FROM books LEFT JOIN notes ON books.id = notes.book_id WHERE books.id = $1 ORDER BY id DESC', [id]);
             return result.rows;
     } catch (error) {
         console.error('Error fetching notes:', error);
@@ -160,13 +160,13 @@ app.post('/new-entry/add', async (req, res) => {
     }
 });
 
-// Handle GET route for '/notes/:id' to display notes for a specific book.
-app.get('/notes/:id', async (req, res) => {
-    // Get book id from URL parameter and assign to currentBookId global variable.
-    currentBookId = req.params.id;
+// Handle GET route for '/notes/:bookId' to display notes for a specific book.
+app.get('/notes/:bookId', async (req, res) => {
+    // Get bookId from URL parameter.
+    const bookId = req.params.bookId;
 
     try {
-        const notes = await fetchNotes(currentBookId); // Fetch notes for the specified book id.
+        const notes = await fetchNotes(bookId); // Fetch notes for the specified book id.
         const formattedNotes = await formatData(notes); // Format notes.
 
         res.render('notes.ejs', { data: formattedNotes }); // Render notes.ejs and send over required data.
@@ -175,56 +175,59 @@ app.get('/notes/:id', async (req, res) => {
     }
 });
 
-// Handle POST request for '/notes/add' to add new notes.
-app.post('/notes/add', async (req, res) => {
+// Handle POST request for '/notes/:bookId/add' to add new notes.
+app.post('/notes/:bookId/add', async (req, res) => {
+    const bookId = req.params.bookId; // Get the bookId from URL parameter.
     const note = req.body.newNote;
+    // Pass the note string from HTML input to server and save to database using the bookId.
 
-    // Pass note string from HTML input to server and save to database using the currentBookId.
     try {
-        await db.query('INSERT INTO notes (note, book_id) VALUES ($1, $2)', [note, currentBookId]);
+        await db.query('INSERT INTO notes (note, book_id) VALUES ($1, $2)', [note, bookId]);
 
-        res.redirect(`/notes/${currentBookId}`); // res.redirect reloads the page by hitting the GET route /notes/:id.
+        res.redirect(`/notes/${bookId}`); // res.redirect reloads the page by hitting the GET route /notes/:bookId.
     } catch (error) {
         console.log(error);
     }
 });
 
-// Handle POST request for '/notes/update' to update a note.
-app.post('/notes/update/:id', async (req, res) => {
+// Handle POST request for '/notes/:noteId/update' to update a note.
+app.post('/notes/:noteId/update', async (req, res) => {
     const updatedNote = req.body.noteToUpdate;
-    const updateNoteId = req.params.id;
+    const updateNoteId = req.params.noteId;
+    const bookId = req.body.bookId;
     
-    // Pass the note id and the note to server.
+    // Pass note id, note and book id to server.
     // Make database query to update the note.
     try {
         await db.query('UPDATE notes SET note = ($1) WHERE id = $2', [updatedNote, updateNoteId]);
-        res.redirect(`/notes/${currentBookId}`);
+        res.redirect(`/notes/${bookId}`);
     } catch (error) {
         console.log(error);
     }
 });
 
-// Handle POST request for '/notes/delete' to delete a note.
-app.post('/notes/delete/:id', async (req, res) => {
-    const deleteNoteId = req.params.id;
-    // Pass a note id from delete button to server.
-    // Make database query to delete a note using this id.
+// Handle POST request for '/notes/:noteId/delete' to delete a note.
+app.post('/notes/:noteId/delete', async (req, res) => {
+    const deleteNoteId = req.params.noteId;
+    const bookId = req.body.bookId;
+    // Pass note id and book id to server.
+    // Make database query to delete a note using the note id.
     try {
        await db.query('DELETE FROM notes WHERE id = $1', [deleteNoteId]);
-       res.redirect(`/notes/${currentBookId}`);
+       res.redirect(`/notes/${bookId}`);
     } catch (error) {
        console.log(error);
     }
    });
 
 // Handle POST route for '/update/review/:id' to update a book review.
-app.post('/update/review/:id', async (req, res) => {
+app.post('/reviews/:bookId/update', async (req, res) => {
     const updatedReview = req.body.reviewToUpdate;
-    currentBookId = req.params.id;
+    const bookId = req.params.bookId;
     // Pass the review to update and the book id to server.
     // Make a database query to update the review.
     try {
-        await db.query('UPDATE books SET review = ($1) WHERE id = $2', [updatedReview, currentBookId]);
+        await db.query('UPDATE books SET review = ($1) WHERE id = $2', [updatedReview, bookId]);
         res.redirect('/');
     } catch (error) {
         console.log(error);
@@ -232,8 +235,8 @@ app.post('/update/review/:id', async (req, res) => {
 });
 
 // Handle POST route for '/delete/book/:id' to delete a book and its notes.
-app.post('/delete/book/:id', async (req, res) => {
- const deleteBookId = req.params.id;
+app.post('/books/:bookId/delete', async (req, res) => {
+ const deleteBookId = req.params.bookId;
     // Pass book id to server
     // Make two database queries for deletion.
  try {
