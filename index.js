@@ -30,9 +30,6 @@ db.connect();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-let bookDetails = []; // Initialize bookDetails
-// let currentBookId = null; // Variable for passing data between functions/methods.
-
 // Function to fetch and save book cover image from Open Library Covers API.
 async function fetchAndSaveCover(isbn) {
     const url = `https://covers.openlibrary.org/b/isbn/${isbn}-M.jpg`; // API URL for book cover with ISBN and size parameter (M).
@@ -120,8 +117,7 @@ app.get('/', async (req, res) => {
                 'SELECT * FROM books ORDER BY rating DESC');
         }
         
-        bookDetails = result.rows; // Assign result.rows to bookDetails.
-        const formattedDetails = formatData(bookDetails); // Format bookDetails, replacing newline characters with <br> tags.
+        const formattedDetails = formatData(result.rows); // Format the book details, replacing newline characters with <br> tags.
 
         res.render('index.ejs', { data: formattedDetails, sortOption: currentSortOption }); // Render index.ejs and send over required data.
     } catch (error) {
